@@ -19,6 +19,7 @@ class PokemonDetailPresenter(activity: PokemonDetailActivity)
     override fun getPokemon(nameId: String) {
         if (!isViewAttached()) return
         lastRequest?.dispose()
+        mView?.showLoading(true)
 
         val observable = weakActivity.get()?.applicationContext?.let {
             NetworkClient().getRxInstance(it)
@@ -39,11 +40,12 @@ class PokemonDetailPresenter(activity: PokemonDetailActivity)
             }
 
             override fun onError(e: Throwable) {
-                //TODO("Not yet implemented")
+                mView?.showLoading(false)
+                mView?.showError("not found")
             }
 
             override fun onComplete() {
-                //TODO("Not yet implemented")
+                mView?.showLoading(false)
             }
 
         })

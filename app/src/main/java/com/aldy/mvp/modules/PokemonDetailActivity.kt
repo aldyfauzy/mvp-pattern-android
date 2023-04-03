@@ -1,6 +1,7 @@
 package com.aldy.mvp.modules
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.widget.SearchView
 import com.aldy.mvp.base.BaseActivity
 import com.aldy.mvp.data.model.response.GetPokemonResp
@@ -40,8 +41,26 @@ class PokemonDetailActivity : BaseActivity(), PokemonDetailContract.ViewAction {
     }
 
     override fun setPokeData(resp: GetPokemonResp) {
+        binding.detailLayout.visibility = View.VISIBLE
+        binding.tvError.visibility = View.GONE
         binding.tvPokeName.text = resp.name
         Glide.with(this).load(resp.sprites.frontDefault).into(binding.ivPokeDefault)
+    }
+
+    override fun showLoading(isShow: Boolean) {
+        if (isShow) {
+            binding.loading.visibility = View.VISIBLE
+            binding.detailLayout.visibility = View.GONE
+        } else {
+            binding.loading.visibility = View.GONE
+            binding.detailLayout.visibility = View.VISIBLE
+        }
+    }
+
+    override fun showError(message: String) {
+        binding.detailLayout.visibility = View.GONE
+        binding.tvError.visibility = View.VISIBLE
+        binding.tvError.text = message
     }
 
     override fun onDestroy() {

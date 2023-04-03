@@ -6,6 +6,8 @@ interface PokemonDetailContract {
     interface ViewAction{
         fun initView()
         fun setPokeData(resp: GetPokemonResp)
+        fun showLoading(isShow: Boolean)
+        fun showError(message: String)
     }
 
     interface Presenter{
